@@ -5,7 +5,7 @@
 #include<stdlib.h>//sizeof
 #include<netinet/in.h>//INADDR_ANY
 
-#define PORT 8000
+#define PORT 8888
 #define SERVER_IP "127.0.0.1"
 #define MAXSZ 1024
 int main(int argc, char **argv)
@@ -32,34 +32,18 @@ int main(int argc, char **argv)
  //sending client nickname to server
  send(sockfd,argv[6],10,0);
  
- printf("==>>client1\n");
-recv(sockfd,msg2,MAXSZ,0);
- printf("%s\n", msg2);
- //bzero(&msg2,MAXSZ);
- 
  //send to sever and receive from server
  while(1)
  {
-	 printf("==>>\n");
-	 memset(msg2,0,strlen(msg2));
-	 n=recv(sockfd,msg2,MAXSZ,0);
-	if(n==0)
-		break;
-	
-	printf(msg2);
+	 memset(&msg1,0,strlen(msg2));
+	 n=recv(sockfd,msg1,MAXSZ,0);
+	 printf("%s",msg1);
   
-  //printf("\nEnter message to send to server:\n");
-  fgets(msg2,MAXSZ,stdin);
-  n=strlen(msg2)+1;
-  send(sockfd,msg2,n,0);
-
-  n=recv(sockfd,msg2,MAXSZ,0);
-  if(n==0)
-    {
-     close(sockfd);
-     break;
-    }
-  printf("Receive message from  server::%s\n",msg2);
+	 //printf("\nEnter message to send to server:\n");
+	 memset(&msg2,0,strlen(msg2));
+	 fgets(msg2,MAXSZ,stdin);
+	 n=strlen(msg2)+1;
+	 send(sockfd,msg2,n,0);
  }
 
  return 0;
